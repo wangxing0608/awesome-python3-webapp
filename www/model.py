@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 # _*_ coding:utf-8 _*_
 
-'''
-Models for user, blog, comment
-'''
-
 __author__ = 'wangxing'
 
-import time, uuid
+import time
+import uuid
 
 from orm import Model, StringField, BooleanField, FloatField, TextField
 
 
 def next_id():
-    return '%015d%s000' % (int (time.time() * 1000), uuid.uuid4().hex)
+    return '%015d%s000' % (int(time.time() * 1000), uuid.uuid4().hex)
 
 
 class User(Model):
@@ -21,10 +18,11 @@ class User(Model):
 
     id = StringField(primary_key=True, default=next_id, ddl='varchar(50)')
     email = StringField(ddl='varchar(50)')
-    password = StringField(ddl='varchar(50)')
+    passwd = StringField(ddl='varchar(50)')
     admin = BooleanField()
     name = StringField(ddl='varchar(50)')
     image = StringField(ddl='varchar(500)')
+    # 时间和日期用float类型存储在数据库中,不要datetime类型的好处是不必关心数据库的时区和时区转换,显示时只需要做一个float到str的转换
     created_at = FloatField(default=time.time)
 
 
